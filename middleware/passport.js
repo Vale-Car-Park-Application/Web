@@ -2,6 +2,7 @@ const passport = require('passport')
 const passportStrategy = require('passport-google-oauth20').Strategy
 const User = require('../models/userModel')
 const bcrypt = require('bcrypt')
+const env = require('../env')
 
 passport.serializeUser((user, done) => {
     done(null, user.id)
@@ -13,8 +14,8 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use(new passportStrategy({
-        clientID: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
+        clientID: env.CLIENT_ID,
+        clientSecret: env.CLIENT_SECRET,
         callbackURL: "/auth/google/callback",
     },
     (accessToken, refreshToken, profile, done) => {

@@ -6,21 +6,11 @@ const path = require('path');
 const result = require('dotenv').config()
 const passport = require('passport')
 const cookie = require('cookie-session')
-
+const env = require('./env');
 // DOTENV
 if (result.error) {
     throw result.error
 }
-const mongoose = require('mongoose');
-
-mongoose.connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useFindAndModify: false,
-        useUnifiedTopology: true
-    })
-    .then(() => console.log("DB'ye bağlanldı"))
-    .catch(err => console.log("DB'ye bağlanırken hata oluştu: " + err))
 
 //Express Options
 app.use(cors());
@@ -48,7 +38,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session())
 
-app.listen(process.env.PORT, (err) => {
+app.listen(env.PORT, (err) => {
     if (!err) console.log('Sunucu çalıştırıldı');
     if (err) console.log('Sunucu çalışırken hata');
 });
