@@ -3,14 +3,9 @@ const app = express();
 const ejs = require('ejs');
 const cors = require('cors');
 const path = require('path');
-const result = require('dotenv').config()
 const passport = require('passport')
 const cookie = require('cookie-session')
 const env = require('./env');
-// DOTENV
-if (result.error) {
-    throw result.error
-}
 
 //Express Options
 app.use(cors());
