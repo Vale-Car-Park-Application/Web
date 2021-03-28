@@ -3,13 +3,24 @@ const app = express();
 const ejs = require('ejs');
 const cors = require('cors');
 const path = require('path');
-const router = require('./routes/router');
 const result = require('dotenv').config()
+const passport = require('passport')
+const cookie = require('cookie-session')
 
 // DOTENV
 if (result.error) {
     throw result.error
 }
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGO_URI, {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useFindAndModify: false,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log("DB'ye bağlanldı"))
+    .catch(err => console.log("DB'ye bağlanırken hata oluştu: " + err))
 
 //Express Options
 app.use(cors());
@@ -20,12 +31,26 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 app.set('views', './views');
 app.use('/public', express.static(path.join(__dirname, 'public')));
-app.use('/', router);
 
 //MongoDB Connection
 require('./configs/db_connection');
 
+//Passport Conenction
+require('./middleware/passport')
+
+//Passport
+app.use(
+    cookie({
+        maxAge: 30 * 24 * 60 * 60 * 1000,
+        keys: ['dlkmckldsmkl']
+    })
+)
+app.use(passport.initialize());
+app.use(passport.session())
+
 app.listen(process.env.PORT, (err) => {
-    if(!err) console.log('Sunucu çalıştırıldı');
-    if(err) console.log('Sunucu çalışırken hata');
+    if (!err) console.log('Sunucu çalıştırıldı');
+    if (err) console.log('Sunucu çalışırken hata');
 });
+const router = require('./routes/router');
+app.use('/', router);
