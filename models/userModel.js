@@ -19,7 +19,7 @@ const userSchema = new Schema({
     password: {
         type: String,
     },
-    googleId: {
+    phoneNumber: {
         type: String,
         unique: true
     },
@@ -41,9 +41,12 @@ const userSchema = new Schema({
     },
     vehicleType: {
         type: String
+    },
+    fuelType: {
+        type: String
     }
-}, { collection: 'users2' })
+}, { collection: 'users' })
 
-const User = mongoose.model('users2', userSchema)
+const User = mongoose.model('users', userSchema)
 
 module.exports = User;

@@ -1,0 +1,85 @@
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcrypt')
+const User = require('../models/userModel')
+
+const signIn = async(req, res) => {
+    const user = await User.findOne({
+        email: req.body.email
+    }, async(err, user) => {
+        //console.log(user);
+        if (err) {
+            res.json(err)
+        } else if (!user) {
+            res.json('Hatalı bilgi...') // e posta hatalı
+        } else {
+            bcrypt.compare(req.body.password, user.password, (error, result) => {
+                //console.log(req.body.password + user.password);
+                if (error) {
+                    res.json(error)
+                } else if (!result) {
+                    res.json('Hatalı bilgi...') // şifre hatalı
+                } else if (result) {
+                    const token = jwt.sign({
+                        id: user._id
+                    }, 'supersecret', {
+                        expiresIn: '1h'
+                    })
+                    res.status(200).json({
+                        "success": "true",
+                        "code": "200",
+                        "message": "Girişiniz başarıyla yapıldı.",
+                        "data": {
+                            profile: user,
+                            token: token
+                        }
+                    })
+                }
+
+            })
+        }
+    })
+}
+
+const signUp = async(req, res) => {
+    try {
+        var hashedPassword = await bcrypt.hash(req.body.password, 8);
+        const user = User.create({
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword,
+            phoneNumber: req.body.phoneNumber,
+            licencePlate: req.body.phoneNumber,
+            vehicleType: req.body.vehicleType,
+            fuelType: req.body.fuelType
+        }, (err, user) => {
+            if (err) {
+                if (err.code == 11000) {
+                    res.status(409).json({
+                            "success": "false",
+                            "code": "409",
+                            "message": `Daha önceden bu ${Object.keys(err.keyPattern)[0]} ile kaydolunmuş.`,
+                        })
+                        //console.log(err)
+                } else if (err) {
+                    res.json(err)
+                }
+            } else {
+                res.status(200).json({
+                    "success": "true",
+                    "code": "200",
+                    "message": "Database'e ekleme yapıldı.",
+                    "data": {
+                        profile: user,
+                    }
+                })
+            }
+        })
+    } catch (err) {
+        res.json(err)
+    }
+}
+
+module.exports = {
+    signIn,
+    signUp
+}

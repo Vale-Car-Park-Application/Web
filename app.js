@@ -14,7 +14,7 @@ app.use(express.urlencoded({
 }));
 app.use(express.json());
 app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set('views', __dirname + '/views');
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 //MongoDB Connection
@@ -43,7 +43,7 @@ const swaggerDefinition = {
     basePath: '/',
     components: {
         securitySchemes: {
-            
+
         }
     },
     security: [{
