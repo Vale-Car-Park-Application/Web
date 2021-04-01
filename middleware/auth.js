@@ -4,9 +4,13 @@ module.exports = async function auth(req, res, next) {
     try {
         //console.log(req.headers);
         const token = await (req.headers['authorization'] || req.headers['authorization'].split(' ')[1])
-            //console.log(token);
+        //console.log(token);
         if (token == null) {
-            return res.json('Token hatası')
+            return res.status(401).json({
+                "success": false,
+                "code": 401,
+                "message": "Token hatası.",
+            })
         }
         const sonuc = jwt.verify(token, 'supersecret')
 

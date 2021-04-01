@@ -1,0 +1,452 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "VALE API",
+    "description": "Express ile tasarlanmış Vale uygulaması için gerekli REST API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "tags": [{
+    "name": "Auth",
+    "description": "Kullanıcıların giriş çıkış işlemleri"
+  }],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/signin": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Giriş Yapma",
+        "parameters": [{
+          "name": "user",
+          "in": "body",
+          "description": "kullanıcı bilgileri girilir.",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "required": [],
+            "properties": {
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              }
+            }
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Giriş işlemi başarılı olduğunda gönderilir.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "default": "true",
+                  "description": "İşlem başarılı mı değil mi"
+                },
+                "code": {
+                  "type": "integer",
+                  "default": "200",
+                  "description": "Statü Kodu"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Girişiniz başarıyla yapıldı.",
+                  "description": "Kullanıcıya verilecek mesaj"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "sadasd",
+                      "default": "ak^'%'&+^&dmssakm'KM!MK^!KMskmdakfmdsf"
+                    },
+                    "profile": {
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "default": "Fırat Emre ŞİRVAN"
+                        },
+                        "email": {
+                          "type": "string",
+                          "default": "femresirvan@gmail.com"
+                        },
+                        "password": {
+                          "type": "string",
+                          "default": "askdmka21k3m1mk"
+                        },
+                        "phoneNumber": {
+                          "type": "string",
+                          "default": "05053233232"
+                        },
+                        "reservation": {
+                          "properties": {
+                            "carParkId": {
+                              "type": "string",
+                              "default": "1"
+                            },
+                            "state": {
+                              "type": "boolean",
+                              "default": "false"
+                            },
+                            "reservationArea": {
+                              "type": "string",
+                              "default": "A1"
+                            }
+                          }
+                        },
+                        "licensePlate": {
+                          "type": "string",
+                          "default": "12 ADC 1212"
+                        },
+                        "vehicleType": {
+                          "type": "string",
+                          "default": "sedan"
+                        },
+                        "fuelType": {
+                          "type": "string",
+                          "default": "lpg"
+                        }
+                      }
+                    }
+                  },
+                  "description": "Kullanıcının ihtiyacı olan data + resource"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Email veya şifre bulunamazsa gönderilir.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "default": "false",
+                  "description": "İşlem başarılı mı değil mi"
+                },
+                "code": {
+                  "type": "integer",
+                  "default": "404",
+                  "description": "Statü Kodu"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Verilen email bilgileri hatalıdır.",
+                  "description": "Kullanıcıya verilecek mesaj"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Kayıt Olma",
+        "parameters": [{
+          "name": "user",
+          "in": "body",
+          "description": "Kayıt olunacak kullanıcı bilgileri girilir.",
+          "required": true,
+          "schema": {
+            "type": "object",
+            "required": [],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "phoneNumber": {
+                "type": "string"
+              },
+              "licensePlate": {
+                "type": "string"
+              },
+              "vehicleType": {
+                "type": "string"
+              },
+              "fuelType": {
+                "type": "string"
+              }
+            }
+          }
+        }],
+        "responses": {
+          "200": {
+            "description": "Kayıt işlemi başarılı olduğunda gönderilir.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "default": "true",
+                  "description": "İşlem başarılı mı değil mi"
+                },
+                "code": {
+                  "type": "integer",
+                  "default": "200",
+                  "description": "Statü Kodu"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Kaydınız başarıyla yapıldı.",
+                  "description": "Kullanıcıya verilecek mesaj"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "profile": {
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "default": "Fırat Emre ŞİRVAN"
+                        },
+                        "email": {
+                          "type": "string",
+                          "default": "femresirvan@gmail.com"
+                        },
+                        "password": {
+                          "type": "string",
+                          "default": "askdmka21k3m1mk"
+                        },
+                        "phoneNumber": {
+                          "type": "string",
+                          "default": "05053233232"
+                        },
+                        "reservation": {
+                          "properties": {
+                            "carParkId": {
+                              "type": "string",
+                              "default": "1"
+                            },
+                            "state": {
+                              "type": "boolean",
+                              "default": "false"
+                            },
+                            "reservationArea": {
+                              "type": "string",
+                              "default": "A1"
+                            }
+                          }
+                        },
+                        "licensePlate": {
+                          "type": "string",
+                          "default": "12 ADC 1212"
+                        },
+                        "vehicleType": {
+                          "type": "string",
+                          "default": "sedan"
+                        },
+                        "fuelType": {
+                          "type": "string",
+                          "default": "lpg"
+                        }
+
+                      }
+                    }
+                  },
+                  "description": "Kullanıcının ihtiyacı olan data + resource"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Aynı kayıt bilgilerinden olan kişi varsa gönderilir.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "default": "false",
+                  "description": "İşlem başarılı mı değil mi"
+                },
+                "code": {
+                  "type": "integer",
+                  "default": "409",
+                  "description": "Statü Kodu"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Daha önceden bu phonenumber ile kaydolunmuş.",
+                  "description": "Kullanıcıya verilecek mesaj"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/current_user": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Mevcut kullanıcı bilgilerini alma",
+        "security": [{
+          "token": []
+        }],
+        "responses": {
+          "200": {
+            "description": "Kullanıcı bilgileri doğru olarak verilir.",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "default": "true",
+                  "description": "İşlem başarılı mı değil mi"
+                },
+                "code": {
+                  "type": "integer",
+                  "default": "200",
+                  "description": "Statü Kodu"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Kullanıcı bilgileri gönderildi.",
+                  "description": "Kullanıcıya verilecek mesaj"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "profile": {
+                      "properties": {
+                        "name": {
+                          "type": "string",
+                          "default": "Fırat Emre ŞİRVAN"
+                        },
+                        "email": {
+                          "type": "string",
+                          "default": "femresirvan@gmail.com"
+                        },
+                        "password": {
+                          "type": "string",
+                          "default": "askdmka21k3m1mk"
+                        },
+                        "phoneNumber": {
+                          "type": "string",
+                          "default": "05053233232"
+                        },
+                        "reservation": {
+                          "properties": {
+                            "carParkId": {
+                              "type": "string",
+                              "default": "1"
+                            },
+                            "state": {
+                              "type": "boolean",
+                              "default": "false"
+                            },
+                            "reservationArea": {
+                              "type": "string",
+                              "default": "A1"
+                            }
+                          }
+                        },
+                        "licensePlate": {
+                          "type": "string",
+                          "default": "12 ADC 1212"
+                        },
+                        "vehicleType": {
+                          "type": "string",
+                          "default": "sedan"
+                        },
+                        "fuelType": {
+                          "type": "string",
+                          "default": "lpg"
+                        }
+
+                      }
+                    }
+                  },
+                  "description": "Kullanıcının ihtiyacı olan data + resource"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token bilgisi hatalı olunca gönderilir",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "default": "false",
+                  "description": "İşlem başarılı mı değil mi"
+                },
+                "code": {
+                  "type": "integer",
+                  "default": "401",
+                  "description": "Statü Kodu"
+                },
+                "message": {
+                  "type": "string",
+                  "default": "Token hatası.",
+                  "description": "Kullanıcıya verilecek mesaj"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "token": {
+      "type": "apiKey",
+      "name": "authorization",
+      "in": "header"
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "gender": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "name": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string"
+            },
+            "first": {
+              "type": "string"
+            },
+            "last": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

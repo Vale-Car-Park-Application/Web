@@ -26,46 +26,11 @@ require('./middleware/passport');
 
 //#region SwaggerUI Configs
 //Swagger şu anlık iptal
-const swaggerJSDoc = require('swagger-jsdoc');
+
 const swaggerUi = require('swagger-ui-express');
 
-const swaggerDefinition = {
-    openapi: '3.0.0',
-    info: {
-        title: 'Vale API',
-        version: '0.1.0',
-        description: 'Express ile tasarlanmış Vale otopark sistemi için gerekli API.',
-        license: {
-            name: 'Licensed Under MIT',
-            url: 'https://spdx.org/licenses/MIT.html',
-        },
-    },
-    basePath: '/',
-    components: {
-        securitySchemes: {
-
-        }
-    },
-    security: [{
-        oauth: []
-    }],
-    servers: [{
-        url: 'https://ieeevale.com',
-        description: 'Ürün Sunucusu',
-    }, {
-        url: 'http://localhost:3000',
-        description: 'Geliştirme Sunucusu',
-    }],
-};
-
-const options = {
-    swaggerDefinition,
-    // Paths to files containing OpenAPI definitions
-    apis: ['./controllers/*.js', './routes/*.js', './middleware/*.js', './configs/*.js'],
-};
-
-const swaggerSpec = swaggerJSDoc(options);
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+swaggerDocument = require('./swagger.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 //#endregion
 
 //Passport
