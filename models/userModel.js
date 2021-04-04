@@ -34,7 +34,7 @@ const userSchema = new Schema({
             type: String
         }
     },
-    licencePlate: {
+    licensePlate: {
         type: String,
         unique: true
     },

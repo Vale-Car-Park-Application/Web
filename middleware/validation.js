@@ -2,6 +2,7 @@ module.exports = (schema) => {
     return (req, res, next) => {
         try {
             const { error, value } = schema.validate(req.body);
+            //console.log(value);
             if (error === undefined || typeof error === "undefined") {
                 return next()
             }

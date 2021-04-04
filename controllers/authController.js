@@ -50,6 +50,7 @@ const signIn = async(req, res) => {
 
 const signUp = async(req, res) => {
     if (req.err) {
+        console.log(req.err);
         if (req.err.details[0].type == 'any.required') {
             res.status(req.err.statusCode).json({
                 success: false,
