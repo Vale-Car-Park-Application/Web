@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Joi = require('joi')
 
 const userSchema = new Schema({
     name: {
         type: String,
-        required: true,
         trim: true,
         maxLength: 25
     },
     email: {
         type: String,
-        required: true,
         trim: true,
         unique: true,
         email: true,
@@ -48,5 +47,6 @@ const userSchema = new Schema({
 }, { collection: 'users' })
 
 const User = mongoose.model('users', userSchema)
+
 
 module.exports = User;

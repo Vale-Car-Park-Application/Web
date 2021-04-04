@@ -22,7 +22,7 @@ const signIn = async(req, res) => {
                     const token = jwt.sign({
                         id: user._id
                     }, 'supersecret', {
-                        expiresIn: '1h'
+                        expiresIn: '24h'
                     })
                     res.status(200).json({
                         "success": "true",
@@ -41,41 +41,63 @@ const signIn = async(req, res) => {
 }
 
 const signUp = async(req, res) => {
-    try {
-        var hashedPassword = await bcrypt.hash(req.body.password, 8);
-        const user = User.create({
-            name: req.body.name,
-            email: req.body.email,
-            password: hashedPassword,
-            phoneNumber: req.body.phoneNumber,
-            licencePlate: req.body.phoneNumber,
-            vehicleType: req.body.vehicleType,
-            fuelType: req.body.fuelType
-        }, (err, user) => {
-            if (err) {
-                if (err.code == 11000) {
-                    res.status(409).json({
-                            "success": "false",
-                            "code": "409",
-                            "message": `Daha önceden bu ${Object.keys(err.keyPattern)[0]} ile kaydolunmuş.`,
-                        })
-                        //console.log(err)
-                } else if (err) {
-                    res.json(err)
-                }
-            } else {
-                res.status(200).json({
-                    "success": "true",
-                    "code": "200",
-                    "message": "Database'e ekleme yapıldı.",
-                    "data": {
-                        profile: user,
+    if (req.err) {
+        if (req.err.details[0].type == 'any.required') {
+            res.status(req.err.statusCode).json({
+                success: false,
+                code: 422,
+                message: "Lütfen bütün alanları doldurun."
+            })
+        } else if (req.err.details[0].type == 'string.email') {
+            res.status(req.err.statusCode).json({
+                success: false,
+                code: 422,
+                message: "Lütfen geçerli bir email girin."
+            })
+        } else if (req.err.details[0].type == 'string.pattern.base') {
+            res.status(req.err.statusCode).json({
+                success: false,
+                code: 422,
+                message: "Lütfen geçerli bir telefon numarası girin."
+            })
+        }
+    } else {
+        try {
+            var hashedPassword = await bcrypt.hash(req.body.password, 8);
+            const user = User.create({
+                name: req.body.name,
+                email: req.body.email,
+                password: hashedPassword,
+                phoneNumber: req.body.phoneNumber,
+                licencePlate: req.body.phoneNumber,
+                vehicleType: req.body.vehicleType,
+                fuelType: req.body.fuelType
+            }, (err, user) => {
+                if (err) {
+                    if (err.code == 11000) {
+                        res.status(409).json({
+                                "success": "false",
+                                "code": "409",
+                                "message": `Daha önceden bu ${Object.keys(err.keyPattern)[0]} ile kaydolunmuş.`,
+                            })
+                            //console.log(err)
+                    } else if (err) {
+                        res.json(err)
                     }
-                })
-            }
-        })
-    } catch (err) {
-        res.json(err)
+                } else {
+                    res.status(200).json({
+                        "success": "true",
+                        "code": "200",
+                        "message": "Database'e ekleme yapıldı.",
+                        "data": {
+                            profile: user,
+                        }
+                    })
+                }
+            })
+        } catch (err) {
+            res.json(err)
+        }
     }
 }
 

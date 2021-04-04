@@ -6,7 +6,11 @@ module.exports = async function auth(req, res, next) {
         const token = await (req.headers['authorization'] || req.headers['authorization'].split(' ')[1])
             //console.log(token);
         if (token == null) {
-            return res.json('Token hatası')
+            return res.status(401).json({
+                success: false,
+                code: 401,
+                message: "Belirtilen token hatalı."
+            })
         }
         const sonuc = jwt.verify(token, 'supersecret')
 
@@ -15,7 +19,26 @@ module.exports = async function auth(req, res, next) {
         req.user = bulunan
         next()
     } catch (err) {
-        console.log(err);
-        res.json(err)
+        if (err.message == 'invalid signature') {
+            res.status(401).json({
+                success: false,
+                code: 401,
+                message: "Belirtilen token hatalı."
+            })
+        } else if (err.name == 'TokenExpiredError') {
+            res.status(401).json({
+                success: false,
+                code: 401,
+                message: "Token tüketim tarihini doldurmuştur."
+            })
+        } else {
+            console.log(err);
+            res.status(401).json({
+                success: false,
+                code: 401,
+                message: "Sistemin bilmediği bir hata oluştu."
+            })
+        }
+
     }
 }
