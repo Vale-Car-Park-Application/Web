@@ -273,6 +273,10 @@
                                                 }
 
                                             }
+                                        },
+                                        "token": {
+                                            "type": "string",
+                                            "default": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYwNmIyMjFjMmZmZTAxMmFlNDhkYzRmOCIsImlhdCI6MTYxNzYzMzgyMCwiZXhwIjoxNjE3NzIwMjIwfQ.2UUI6Og6OQSn3tW_CdQ-wbJtRvqHE6y2Rq9AB8Jod5A"
                                         }
                                     },
                                     "description": "Kullanıcının ihtiyacı olan data + resource"

@@ -85,21 +85,27 @@ const signUp = async(req, res) => {
                 if (err) {
                     if (err.code == 11000) {
                         res.status(409).json({
-                                "success": false,
-                                "code": 409,
-                                "message": `Daha önceden bu ${Object.keys(err.keyPattern)[0]} ile kaydolunmuş.`,
-                            })
-                            console.log(err)
+                            "success": false,
+                            "code": 409,
+                            "message": `Daha önceden bu ${Object.keys(err.keyPattern)[0]} ile kaydolunmuş.`,
+                        })
+                        console.log(err)
                     } else if (err) {
                         res.json(err)
                     }
                 } else {
+                    const token = jwt.sign({
+                        id: user._id
+                    }, 'supersecret', {
+                        expiresIn: '24h'
+                    })
                     res.status(200).json({
                         "success": true,
                         "code": 200,
                         "message": "Database'e ekleme yapıldı.",
                         "data": {
                             profile: user,
+                            token: token
                         }
                     })
                 }
