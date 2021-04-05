@@ -78,7 +78,7 @@ const signUp = async(req, res) => {
                 email: req.body.email,
                 password: hashedPassword,
                 phoneNumber: req.body.phoneNumber,
-                licencePlate: req.body.phoneNumber,
+                licensePlate: req.body.licensePlate,
                 vehicleType: req.body.vehicleType,
                 fuelType: req.body.fuelType
             }, (err, user) => {
@@ -89,7 +89,7 @@ const signUp = async(req, res) => {
                                 "code": 409,
                                 "message": `Daha önceden bu ${Object.keys(err.keyPattern)[0]} ile kaydolunmuş.`,
                             })
-                            //console.log(err)
+                            console.log(err)
                     } else if (err) {
                         res.json(err)
                     }
