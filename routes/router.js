@@ -6,6 +6,7 @@ const homepageController = require('../controllers/homepage_controller')
 const authController = require('../controllers/auth_controller');
 const auth = require('../middleware/auth');
 const apiController = require('../controllers/api_controller');
+const carparkController = require('../controllers/carpark_controller')
 
 router.get('/', homepageController);
 
@@ -19,5 +20,6 @@ router.get('/api/google', passport.authenticate('google', {
 router.post('/api/signin', authController.signIn);
 router.post('/api/signUp', validate(User), authController.signUp);
 router.get('/api/current_user', auth, apiController.getCurrentUser);
+router.post('/api/carparks', auth, carparkController.createCarpark);
 
 module.exports = router;

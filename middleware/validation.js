@@ -9,7 +9,7 @@ module.exports = (schema) => {
             // const err = new Error(
             //     error.details.map((errorObject) => errorObject.message).toString()
             // )
-            error.statusCode = 422;
+            error.statusCode = 400;
             //console.log(error);
             req.err = error
             next()

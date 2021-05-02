@@ -3,7 +3,8 @@ const Schema = mongoose.Schema;
 
 const carparkSchema = new Schema({
     carparkName: {
-        type: String
+        type: String,
+        required: true
     },
     areas: [{
         areaName: {
@@ -13,14 +14,28 @@ const carparkSchema = new Schema({
             type: Number
         },
         state: {
-            type: boolean,
+            type: Boolean,
             default: false
         }
     }],
-    carparkAttendant: String,
-    contact: String,
-    latitude: Number,
-    longitude: Number
+    carparkAttendant: {
+        type: String,
+        required: true
+    },
+    contact: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true
+    },
+    latitude: {
+        type: Number,
+        required: true,
+    },
+    longitude: {
+        type: Number,
+        required: true
+    },
 }, { collection: 'carparks' })
 
 const Carpark = mongoose.model('carparks', carparkSchema)

@@ -307,7 +307,7 @@
                             }
                         }
                     },
-                    "422": {
+                    "400": {
                         "description": "Kayıt bilgilerinde hata varsa gönderilir.",
                         "schema": {
                             "type": "object",
@@ -319,7 +319,7 @@
                                 },
                                 "code": {
                                     "type": "integer",
-                                    "default": "422",
+                                    "default": "400",
                                     "description": "Statü Kodu"
                                 },
                                 "message": {
@@ -490,6 +490,23 @@
                 },
                 "vehicleType": {
                     "type": "string"
+                }
+            }
+        },
+        "Carpark": {
+            "type": "object",
+            "properties": {
+                "carparkName": {
+                    "type": "string"
+                },
+                "areas": {
+                    "type": "array",
+                    "properties": {
+                        "type": "object",
+                        "properties": {
+                            "areaName": "string"
+                        }
+                    }
                 }
             }
         }

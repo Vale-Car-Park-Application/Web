@@ -54,19 +54,19 @@ const signUp = async(req, res) => {
         if (req.err.details[0].type == 'any.required') {
             res.status(req.err.statusCode).json({
                 success: false,
-                code: 422,
+                code: 400,
                 message: "Lütfen bütün alanları doldurun."
             })
         } else if (req.err.details[0].type == 'string.email') {
             res.status(req.err.statusCode).json({
                 success: false,
-                code: 422,
+                code: 400,
                 message: "Lütfen geçerli bir email girin."
             })
         } else if (req.err.details[0].type == 'string.pattern.base') {
             res.status(req.err.statusCode).json({
                 success: false,
-                code: 422,
+                code: 400,
                 message: "Lütfen geçerli bir telefon numarası girin."
             })
         }
