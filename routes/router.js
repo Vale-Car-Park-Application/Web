@@ -1,11 +1,11 @@
 const router = require('express').Router();
 const validate = require('../middleware/validation')
-const User = require('../models/userValidation')
+const User = require('../models/user_validation')
 const passport = require('passport');
 const homepageController = require('../controllers/homepage_controller')
-const authController = require('../controllers/authController');
+const authController = require('../controllers/auth_controller');
 const auth = require('../middleware/auth');
-const apiController = require('../controllers/apiController');
+const apiController = require('../controllers/api_controller');
 
 router.get('/', homepageController);
 
