@@ -22,5 +22,8 @@ router.post('/api/signin', authController.signIn);
 router.post('/api/signUp', validate(User), authController.signUp);
 router.get('/api/current_user', auth, apiController.getCurrentUser);
 router.post('/api/carparks', validate(Carpark), carparkController.createCarpark);
+router.get('/api/carparks', carparkController.getCarparks)
+router.get('/api/carparks/:id', carparkController.getCarparkById);
+router.put('/api/carparks/:id', validate(Carpark), carparkController.updateCarparkById)
 
 module.exports = router;

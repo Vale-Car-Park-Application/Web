@@ -1,0 +1,2 @@
+unique alanlar için aynı unique fieldtan kayıt yapılırsa diye istisna ekle 
+joi eklenecek yerlere joi ekle
