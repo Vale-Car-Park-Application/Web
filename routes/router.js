@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const validate = require('../middleware/validation')
 const User = require('../models/user_validation')
-const Carpark = require('../models/carpark_validation')
+const { carparkValidation, areas } = require('../models/carpark_validation')
 const passport = require('passport');
 const homepageController = require('../controllers/homepage_controller')
 const authController = require('../controllers/auth_controller');
@@ -21,9 +21,9 @@ router.get('/api/google', passport.authenticate('google', {
 router.post('/api/signin', authController.signIn);
 router.post('/api/signUp', validate(User), authController.signUp);
 router.get('/api/current_user', auth, apiController.getCurrentUser);
-router.post('/api/carparks', validate(Carpark), carparkController.createCarpark);
-router.get('/api/carparks', carparkController.getCarparks)
-router.get('/api/carparks/:id', carparkController.getCarparkById);
-router.put('/api/carparks/:id', validate(Carpark), carparkController.updateCarparkById)
+router.post('/api/carparks', auth, validate(carparkValidation), carparkController.createCarpark);
+router.get('/api/carparks', auth, carparkController.getCarparks)
+router.get('/api/carparks/:id', auth, carparkController.getCarparkById);
+router.put('/api/carparks/:id', auth, validate(areas), carparkController.updateCarparkById)
 
 module.exports = router;
