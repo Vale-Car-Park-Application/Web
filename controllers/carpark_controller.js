@@ -7,7 +7,7 @@ const createCarpark = async(req, res) => {
             res.status(req.err.statusCode).json({
                 success: false,
                 code: 400,
-                message: "Lütfen bütün alanları doldurun."
+                message: "Lütfen bütün alanları doğru bir şekilde doldurun."
             })
         }
     } else {
@@ -31,7 +31,7 @@ const createCarpark = async(req, res) => {
                 res.status(409).json({
                         "success": false,
                         "code": 409,
-                        "message": `Daha önceden bu ${Object.keys(err.keyPattern)[0]} ile kaydolunmuş.`,
+                        "message": `Daha önceden bu ${Object.keys(err.keyPattern)[0]} ile otopark kaydedilmiş.`,
                     })
                     //console.log(err)
             } else if (err) {
@@ -117,7 +117,6 @@ const updateCarparkById = async(req, res) => {
                     "success": true,
                     "code": 200,
                     "message": "Başarıyla güncelleme yapıldı.",
-                    "data": result
                 })
             }
 
