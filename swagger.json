@@ -768,20 +768,25 @@
                         "schema": {
                             "type": "object",
                             "properties": {
-                                "success": {
-                                    "type": "boolean",
-                                    "default": "true",
-                                    "description": "İşlem başarılı mı değil mi"
-                                },
-                                "code": {
-                                    "type": "integer",
-                                    "default": "200",
-                                    "description": "Statü Kodu"
-                                },
-                                "message": {
+                                "areaName": {
                                     "type": "string",
-                                    "default": "Başarıyla güncelleme yapıldı.",
-                                    "description": "Kullanıcıya verilecek mesaj"
+                                    "default": "true",
+                                    "description": "Alan adı"
+                                },
+                                "remainingTime": {
+                                    "type": "string",
+                                    "default": "200",
+                                    "description": "Rezervasyon için kalan süre"
+                                },
+                                "_id": {
+                                    "type": "string",
+                                    "default": "24charuzunlugunda_iddsfsdf",
+                                    "description": "alanın id'si"
+                                },
+                                "state":{
+                                    "type":"boolean",
+                                    "default":"true",
+                                    "description": "Rezervasyon durumu tutulur."
                                 }
                             }
                         }
