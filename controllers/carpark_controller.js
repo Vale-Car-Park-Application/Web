@@ -106,9 +106,9 @@ const updateCarparkById = async(req, res) => {
                 }
             })
             if (result.nModified == 0) {
-                res.status(404).json({
+                res.status(409).json({
                     "success": false,
-                    "code": 404,
+                    "code": 409,
                     "message": "Rezerve edilen yerleri tekrar rezerve edemezsiniz.",
                     "internalMessage": "Databasede bir güncelleme yapılmadı."
                 })
