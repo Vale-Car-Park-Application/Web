@@ -9,7 +9,7 @@ module.exports = async function auth(req, res, next) {
             return res.status(401).json({
                 success: false,
                 code: 401,
-                message: "Belirtilen token hatalı."
+                message: "Belirtilen token BOŞ."
             })
         }
         const sonuc = jwt.verify(token, 'supersecret')
