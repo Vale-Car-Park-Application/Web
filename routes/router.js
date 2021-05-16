@@ -4,12 +4,16 @@ const User = require('../models/user_validation')
 const { carparkValidation, areas } = require('../models/carpark_validation')
 const passport = require('passport');
 const homepageController = require('../controllers/homepage_controller')
+const aboutController = require('../controllers/about_controller')
+const contactController = require('../controllers/contact_controller')
 const authController = require('../controllers/auth_controller');
 const auth = require('../middleware/auth');
 const apiController = require('../controllers/api_controller');
 const carparkController = require('../controllers/carpark_controller')
 
 router.get('/', homepageController);
+router.get('/about', aboutController);
+router.get('/contact', contactController);
 
 router.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
     res.json("ok")
