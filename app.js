@@ -5,8 +5,8 @@ const cors = require('cors');
 const path = require('path');
 const passport = require('passport')
 const cookie = require('cookie-session')
-const env = require('./env');
-
+ const env = require('./env');
+ 
 //Express Options
 app.use(cors());
 app.use(express.urlencoded({
