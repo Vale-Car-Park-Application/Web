@@ -2,7 +2,7 @@ const Carpark = require('../models/carpark_model')
 
 const createCarpark = async(req, res) => {
     if (req.err) {
-        //console.log("AAA" + req.err);
+        console.log("AAA" + req.err);
         if (req.err.details[0].type == 'any.required') {
             res.status(req.err.statusCode).json({
                 success: false,
@@ -100,9 +100,10 @@ const updateCarparkById = async(req, res) => {
         try {
             const result = await Carpark.updateOne({ '_id': req.params.id, 'areas._id': req.body._id }, {
                 $set: {
-                    'areas.$.state': req.body.state,
+                    'areas.$.reservationState': req.body.state,
                     'areas.$.areaName': req.body.areaName,
-                    'areas.$.remainingTime': req.body.remainingTime
+                    'areas.$.remainingTime': req.body.remainingTime,
+                    'areas.$.isFull': req.body.isFull
                 }
             })
             if (result.nModified == 0) {
