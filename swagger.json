@@ -531,11 +531,8 @@
                                             "type": "string"
                                         },
                                         "remainingTime": {
-                                            "type": "string"
-                                        },
-                                        "state": {
-                                            "type": "boolean",
-                                            "default": "false"
+                                            "type": "number",
+                                            "default": 0
                                         }
                                     }
                                 }
@@ -786,7 +783,7 @@
                                     "default": "24charuzunlugunda_iddsfsdf",
                                     "description": "alanın id'si"
                                 },
-                                "state": {
+                                "reservationState": {
                                     "type": "boolean",
                                     "default": "true",
                                     "description": "Rezervasyon durumu tutulur."
@@ -994,7 +991,11 @@
                             "remainingTime": {
                                 "type": "string"
                             },
-                            "state": {
+                            "reservationState": {
+                                "type": "boolean",
+                                "default": "false"
+                            },
+                            "isFull": {
                                 "type": "boolean",
                                 "default": "false"
                             },

@@ -48,4 +48,5 @@ app.listen(env.PORT, (err) => {
     if (err) console.log('Sunucu çalışırken hata');
 });
 const router = require('./routes/router');
+require('./controllers/mqtt_controller')
 app.use('/', router);

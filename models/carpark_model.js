@@ -13,7 +13,11 @@ const carparkSchema = new Schema({
         remainingTime: {
             type: Number
         },
-        state: {
+        reservationState: {
+            type: Boolean,
+            default: false
+        },
+        isFull: {
             type: Boolean,
             default: false
         }

@@ -4,7 +4,8 @@ const areas = joi.object({
     _id: joi.string().length(24),
     areaName: joi.string(),
     remainingTime: joi.number(),
-    state: joi.boolean()
+    reservationState: joi.boolean(),
+    isFull: joi.boolean()
 })
 
 const carparkValidation = joi.object({
