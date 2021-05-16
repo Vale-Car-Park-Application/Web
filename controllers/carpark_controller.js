@@ -100,7 +100,7 @@ const updateCarparkById = async(req, res) => {
         try {
             const result = await Carpark.updateOne({ '_id': req.params.id, 'areas._id': req.body._id }, {
                 $set: {
-                    'areas.$.reservationState': req.body.state,
+                    'areas.$.reservationState': req.body.reservationState,
                     'areas.$.areaName': req.body.areaName,
                     'areas.$.remainingTime': req.body.remainingTime,
                     'areas.$.isFull': req.body.isFull
