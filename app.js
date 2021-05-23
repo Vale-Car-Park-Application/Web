@@ -23,7 +23,7 @@ require('./configs/db_connection');
 //Passport Conenction
 require('./middleware/passport');
 
-require('./controllers/carparkInterval')
+require('./configs/carparkInterval')
     //#region SwaggerUI Configs
     //Swagger şu anlık iptal
 
