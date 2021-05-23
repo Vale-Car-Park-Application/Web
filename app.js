@@ -23,9 +23,9 @@ require('./configs/db_connection');
 //Passport Conenction
 require('./middleware/passport');
 
-
-//#region SwaggerUI Configs
-//Swagger şu anlık iptal
+require('./controllers/carparkInterval')
+    //#region SwaggerUI Configs
+    //Swagger şu anlık iptal
 
 const swaggerUi = require('swagger-ui-express');
 
