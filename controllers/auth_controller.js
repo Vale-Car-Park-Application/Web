@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('../models/user_model')
+const Token = require('../models/token_model')
 
 const signIn = async(req, res) => {
     const user = await User.findOne({
@@ -116,7 +117,27 @@ const signUp = async(req, res) => {
     }
 }
 
+const logOut = async(req, res) => {
+    //res.json(req.headers.authorization);
+    const headersToken = await req.headers.authorization;
+    const token = Token.create({
+        token: headersToken
+    }, (err, docs) => {
+        if (err) {
+            res.json(err)
+        } else {
+            // console.log(docs);
+            res.status(200).json({
+                "success": true,
+                "code": 200,
+                "message": "Çıkış işlemi başarıyla yapıldı."
+            })
+        }
+    })
+
+}
 module.exports = {
     signIn,
-    signUp
+    signUp,
+    logOut
 }

@@ -921,6 +921,64 @@
                     }
                 }
             }
+        },
+        "/api/logout": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Çıkış yapma",
+                "security": [{
+                    "token": []
+                }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "description": "Çıkış yapma işlemi başarılı olduğunda verilir.",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "default": "true",
+                                    "description": "İşlem başarılı mı değil mi"
+                                },
+                                "code": {
+                                    "type": "integer",
+                                    "default": "200",
+                                    "description": "Statü Kodu"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "default": "Çıkış işlemi başarıyla yapıldı.",
+                                    "description": "Kullanıcıya verilecek mesaj"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Token bilgisi hatalı olunca gönderilir",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean",
+                                    "default": "false",
+                                    "description": "İşlem başarılı mı değil mi"
+                                },
+                                "code": {
+                                    "type": "integer",
+                                    "default": "401",
+                                    "description": "Statü Kodu"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "default": "Belirtilen token hatalıdır.",
+                                    "description": "Kullanıcıya verilecek mesaj"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "securityDefinitions": {
