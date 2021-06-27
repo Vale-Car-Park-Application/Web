@@ -24,6 +24,7 @@ router.get('/api/google', passport.authenticate('google', {
 
 router.post('/api/signin', authController.signIn);
 router.post('/api/signUp', validate(User), authController.signUp);
+router.get('/api/logout', auth, authController.logOut);
 router.get('/api/current_user', auth, apiController.getCurrentUser);
 router.post('/api/carparks', auth, validate(carparkValidation), carparkController.createCarpark);
 router.get('/api/carparks', auth, carparkController.getCarparks)

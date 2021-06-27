@@ -23,9 +23,9 @@ require('./configs/db_connection');
 //Passport Conenction
 require('./middleware/passport');
 
-
-//#region SwaggerUI Configs
-//Swagger şu anlık iptal
+require('./configs/carparkInterval')
+    //#region SwaggerUI Configs
+    //Swagger şu anlık iptal
 
 const swaggerUi = require('swagger-ui-express');
 
@@ -49,4 +49,5 @@ app.listen(env.PORT, (err) => {
 });
 const router = require('./routes/router');
 require('./controllers/mqtt_controller')
+require('./configs/token_black_list_interval')
 app.use('/', router);
