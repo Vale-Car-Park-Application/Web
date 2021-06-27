@@ -1,7 +1,7 @@
 const mqtt = require('mqtt');
 const Carpark = require('../models/carpark_model')
 
-const client = mqtt.connect('mqtt://127.0.0.1');
+const client = mqtt.connect('mqtt://40.89.138.206');
 
 client.on("error", (err) => {
     console.log("MQTT bağlantısı kurulamadı: " + err);
