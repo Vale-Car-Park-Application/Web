@@ -5,8 +5,8 @@ const cors = require('cors');
 const path = require('path');
 const passport = require('passport')
 const cookie = require('cookie-session')
- const env = require('./env');
- 
+const env = require('./env');
+
 //Express Options
 app.use(cors());
 app.use(express.urlencoded({
@@ -48,6 +48,6 @@ app.listen(env.PORT, (err) => {
     if (err) console.log('Sunucu çalışırken hata');
 });
 const router = require('./routes/router');
-require('./controllers/mqtt_controller')
+//require('./controllers/mqtt_controller')
 require('./configs/token_black_list_interval')
 app.use('/', router);

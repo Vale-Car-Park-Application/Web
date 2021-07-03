@@ -13,7 +13,7 @@ const tokenSchema = new Schema({
     // }
     interval: {
         type: Number,
-        default: 1440
+        default: 1439
     }
 }, { collection: 'token_black_list' })
 

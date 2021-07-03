@@ -1,4 +1,6 @@
 const Carpark = require('../models/carpark_model')
+const User = require('../models/user_model')
+const mqttClient = require('../controllers/mqtt_controller');
 
 const createCarpark = async(req, res) => {
     if (req.err) {
@@ -85,44 +87,76 @@ const updateCarparkById = async(req, res) => {
         })
 
     } else {
-        // try {
-        //     const result = await Carpark.findByIdAndUpdate(req.params.id, req.body, { new: true })
-        //     res.json(result)
-
-        // } catch (err) {
-        //     //console.log(err);
-        // res.status(404).json({
-        //     "success": false,
-        //     "code": 404,
-        //     "message": "Belirtilen id'de otopark bulunamadı."
-        // })
-        // }
         try {
-            const result = await Carpark.updateOne({ '_id': req.params.id, 'areas._id': req.body._id }, {
-                $set: {
-                    'areas.$.reservationState': req.body.reservationState,
-                    'areas.$.areaName': req.body.areaName,
-                    'areas.$.remainingTime': req.body.remainingTime,
-                    'areas.$.isFull': req.body.isFull
-                }
-            })
-            if (result.nModified == 0) {
-                res.status(409).json({
+            const userState = await User.findById({ _id: req.user._id }, (err, docs) => {
+                    if (err) {
+                        console.log(err);
+                    }
+                })
+                //console.log(userState);
+            if (userState.reservation.state == true) {
+                res.status(400).json({
                     "success": false,
-                    "code": 409,
-                    "message": "Rezerve edilen yerleri tekrar rezerve edemezsiniz.",
-                    "internalMessage": "Databasede bir güncelleme yapılmadı."
+                    "code": 400,
+                    "message": `Bu kullanıcı daha önceden rezervasyon yapmış.`
                 })
             } else {
-                res.status(200).json({
-                    "success": true,
-                    "code": 200,
-                    "message": "Başarıyla güncelleme yapıldı.",
+                const state = await Carpark.findById({ _id: req.params.id }, { _id: 1, areas: 1 }, (err, docs) => {
+                    if (err) {
+                        console.log(err);
+                    }
                 })
-            }
+                for (let i = 0; i < state.areas.length; i++) {
+                    //console.log(state.areas[i]);
+                    if (state.areas[i]._id == req.body._id) {
+                        if (state.areas[i].reservationState == true || state.areas[i].isFull == true) {
+                            // console.log("Burası dolu");
+                            res.status(400).json({
+                                "success": false,
+                                "code": 400,
+                                "message": `Araç bulunan veya daha önceden rezerve edilen bir yeri rezerve etmeye çalışıyorsunuz: ${state.areas[i].areaName} Bölgesi`,
+                            })
+                        } else {
+                            const result = await Carpark.updateOne({ '_id': req.params.id, 'areas._id': req.body._id }, {
+                                    $set: {
+                                        'areas.$.reservationState': req.body.reservationState,
+                                        'areas.$.areaName': req.body.areaName,
+                                        'areas.$.remainingTime': req.body.remainingTime,
+                                        'areas.$.isFull': req.body.isFull,
+                                        'areas.$.user_id': req.user._id
+                                    }
+                                })
+                                //console.log(req.user);
+                            const userResult = await User.findByIdAndUpdate({ _id: req.user._id }, {
+                                $set: {
+                                    'reservation.carParkId': req.params.id,
+                                    'reservation.state': req.body.reservationState,
+                                    'reservation.reservationArea': req.body.areaName
+                                }
+                            })
+                            if (result.nModified == 0 || userResult.nModified == 0) {
+                                res.status(409).json({
+                                    "success": false,
+                                    "code": 409,
+                                    "message": "Beklenmedik bir hatayla karşılandı.",
+                                    "internalMessage": "Databasede bir güncelleme yapılmadı."
+                                })
+                            } else {
+                                mqttClient.sendMessage('vale_rezervation', 'id: ' + req.params.id + '  carparkArea: ' + req.body.areaName + '  reservationState: ' + req.body.reservationState);
+                                res.status(200).json({
+                                    "success": true,
+                                    "code": 200,
+                                    "message": "Başarıyla güncelleme yapıldı.",
+                                })
+                            }
+                        }
+                    }
+                }
 
+            }
             //console.log(result);
         } catch (error) {
+            console.log(error);
             res.status(404).json({
                 "success": false,
                 "code": 404,

@@ -20,6 +20,10 @@ const carparkSchema = new Schema({
         isFull: {
             type: Boolean,
             default: false
+        },
+        user_id: {
+            type: String,
+            default: null
         }
     }],
     carparkAttendant: {
