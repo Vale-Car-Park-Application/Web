@@ -109,7 +109,7 @@ const updateCarparkById = async(req, res) => {
                 for (let i = 0; i < state.areas.length; i++) {
                     //console.log(state.areas[i]);
                     if (state.areas[i]._id == req.body._id) {
-                        if (state.areas[i].reservationState == true || state.areas[i].isFull == true && req.body.reservationState) {
+                        if ((state.areas[i].reservationState == true || state.areas[i].isFull == true) && req.body.reservationState) {
                             // console.log("Burası dolu");
                             res.status(400).json({
                                 "success": false,
