@@ -94,7 +94,7 @@ const updateCarparkById = async(req, res) => {
                     }
                 })
                 //console.log(userState);
-            if (userState.reservation.state == true) {
+            if (userState.reservation.state == true && req.body.reservationState) {
                 res.status(400).json({
                     "success": false,
                     "code": 400,
@@ -127,7 +127,7 @@ const updateCarparkById = async(req, res) => {
                                     }
                                 })
                                 //console.log(req.user);
-                            const userResult = await User.findByIdAndUpdate({ _id: req.user._id }, {
+                            const userResult = await User.findByIdAndUpdate(req.user._id, {
                                 $set: {
                                     'reservation.carParkId': req.params.id,
                                     'reservation.state': req.body.reservationState,
