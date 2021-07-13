@@ -27,8 +27,12 @@ class MqttHandler {
         })
         let veri;
         this.mqttClient.on('message', async(topic, message) => {
-            veri = JSON.parse(message)
-                //console.log(veri);
+            try {
+                veri = JSON.parse(message)
+            } catch (err) {
+                console.log(err);
+            }
+            //console.log(veri);
             const result = await Carpark.updateOne({ '_id': veri._id, 'areas.areaName': veri.carparkArea }, {
                 $set: {
                     'areas.$.isFull': veri.isFull
@@ -40,6 +44,7 @@ class MqttHandler {
                 console.log('Park alanında güncelleme yapıldı.');
             }
             //console.log(result);
+
         })
     }
 
